@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+data/raw/
+data/processed/
+data/market_data.db
+.DS_Store
+.pytest_cache/
