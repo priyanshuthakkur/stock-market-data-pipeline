@@ -14,6 +14,7 @@ STAGES = [
     "src/clean_data.py",
     "src/load_db.py",
     "src/analyze.py",
+    "src/backtest.py",
 ]
 
 
@@ -24,7 +25,7 @@ def run_pipeline() -> None:
         if result.returncode != 0:
             print(f"\nPipeline stopped: {stage} failed.")
             sys.exit(1)
-    print("\nPipeline complete. See outputs/closing_prices.png and data/market_data.db")
+    print("\nPipeline complete. See outputs/ (charts) and data/market_data.db")
 
 
 if __name__ == "__main__":

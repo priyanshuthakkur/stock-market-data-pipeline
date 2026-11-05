@@ -34,7 +34,9 @@ def fetch_daily_prices(symbol: str, api_key: str) -> dict:
     params = {
         "function": "TIME_SERIES_DAILY",
         "symbol": symbol,
-        "outputsize": "compact",  # last ~100 trading days
+        # "compact" = last ~100 trading days. Set ALPHA_VANTAGE_OUTPUTSIZE=full in .env
+        # for the full history, if your API plan allows it.
+        "outputsize": os.getenv("ALPHA_VANTAGE_OUTPUTSIZE", "compact"),
         "apikey": api_key,
     }
     response = requests.get(BASE_URL, params=params, timeout=10)
