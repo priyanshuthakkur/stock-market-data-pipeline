@@ -1,7 +1,8 @@
 """
 load_db.py
 ----------
-Loads the cleaned CSV into a local SQLite database. SQLite stands in here
+Loads the price history (or, on a first run, the latest cleaned CSV) into
+a local SQLite database. SQLite stands in here
 for a cloud warehouse (Snowflake, BigQuery, etc.) -- same relational
 modelling and SQL, no cloud account required to run this project.
 
@@ -15,10 +16,13 @@ import pandas as pd
 
 DB_PATH = "data/market_data.db"
 PROCESSED_PATH = "data/processed/clean_prices.csv"
+HISTORY_PATH = "data/history/price_history.csv"
 TABLE_NAME = "daily_prices"
 
 
-def load_to_sqlite(csv_path: str = PROCESSED_PATH, db_path: str = DB_PATH) -> None:
+def load_to_sqlite(csv_path: str | None = None, db_path: str = DB_PATH) -> None:
+    if csv_path is None:
+        csv_path = HISTORY_PATH if os.path.exists(HISTORY_PATH) else PROCESSED_PATH
     df = pd.read_csv(csv_path, parse_dates=["date"])
 
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
